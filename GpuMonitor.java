@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.Timer;
 
 public class GpuMonitor extends JFrame {
     private JTextArea textArea;
@@ -28,7 +32,7 @@ public class GpuMonitor extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 new GpuWorker().execute();
             }
-        })
+        });
     }
 
     public void start() {
@@ -44,11 +48,36 @@ public class GpuMonitor extends JFrame {
                     "nvidia-smi",
                     "--query-gpu=index,name,utilization.gpu,memory.used,memory.total,memory.free,temperature.gpu",
                     "--format=csv,noheader"
-            }
+            };
 
             // A ProcessBuilder to run OS commands
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = null;
+
+            StringBuilder output = new StringBuilder();
+
+            try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = input.readLine()) != null) {
+                    String[] stats = line.split(",");
+                    output.append(line).append("\n");
+                }
+            }
+
+            return output.toString();
         }
+
+        protected void done() {
+            String stats = get();
+            displayArea.setText(stats);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GpuMonitor().start();
+            }
+        });
     }
 }

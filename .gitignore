@@ -1,0 +1,38 @@
+# ---- Java / Maven build outputs ----
+/target/
+/out/
+/*.class
+**/*.class
+
+# ---- IDE: IntelliJ IDEA / JetBrains ----
+.idea/
+*.iml
+*.iws
+*.ipr
+*.xml
+
+# ---- IDE: VS Code ----
+.vscode/
+
+# ---- OS / Misc ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs / Temp ----
+*.log
+logs/
+*.tmp
+*.swp
+
+# ---- Maven Wrapper (keep scripts, ignore downloaded JAR) ----
+.mvn/wrapper/maven-wrapper.jar
+
+# ---- Local environment files ----
+.env
+.env.*
+
+# ---- Backup files ----
+*~
+*.bak
+*.old
