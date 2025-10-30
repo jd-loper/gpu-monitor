@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 
 public class GpuMonitor extends JFrame {
-    private JTextArea textArea;
+    private final JTextArea textArea;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
 
@@ -29,11 +27,7 @@ public class GpuMonitor extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         // Timer to fetch GPU stats every 1000 ms in background
-        updateTimer = new Timer(UPDATE_INTERVAL, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new GpuWorker().execute();
-            }
-        });
+        updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
     }
 
     public void start() {
@@ -69,18 +63,20 @@ public class GpuMonitor extends JFrame {
                     String[] stats = line.split(", ");
 
                     if (stats.length == 7) {
-                        String name = stats[0];
-                        String utilization = stats[1];
-                        String memoryUsed = stats[2];
-                        String memoryTotal = stats[3];
-                        String memoryFree = stats[4];
-                        String temperature = stats[5];
+                        String index = stats[0];
+                        String name = stats[1];
+                        String utilization = stats[2];
+                        String memoryUsed = stats[3];
+                        String memoryTotal = stats[4];
+                        String memoryFree = stats[5];
+                        String temperature = stats[6];
 
+                        output.append(index).append("\n");
                         output.append(name).append("\n");
-                        output.append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
                         output.append(utilization).append("\n");
-                        output.append(temperature).append("\n\n");
+                        output.append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
                         output.append(memoryFree).append("\n");
+                        output.append(temperature).append("\n\n");
                     }
                 }
 
@@ -89,7 +85,7 @@ public class GpuMonitor extends JFrame {
         }
 
         protected void done() {
-            String stats = null;
+            String stats;
             try {
                 stats = get();
                 textArea.setText(stats);
@@ -100,10 +96,6 @@ public class GpuMonitor extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new GpuMonitor().start();
-            }
-        });
+        SwingUtilities.invokeLater(() -> new GpuMonitor().start());
     }
 }
