@@ -3,12 +3,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
+import java.util.concurrent.ExecutionException;
 
 public class GpuMonitor extends JFrame {
     private JTextArea textArea;
-    private Timer updateTimer;
+    private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
 
     public GpuMonitor() {
@@ -26,7 +28,7 @@ public class GpuMonitor extends JFrame {
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Timer to fetch GPU stats every 1000ms in background
+        // Timer to fetch GPU stats every 1000 ms in background
         updateTimer = new Timer(UPDATE_INTERVAL, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new GpuWorker().execute();
@@ -41,7 +43,7 @@ public class GpuMonitor extends JFrame {
     }
 
     private class GpuWorker extends SwingWorker<String, Void> {
-        protected String doInBackground() {
+        protected String doInBackground() throws IOException {
             // Run command for GPU stats
             String[] command = {
                     "nvidia-smi",
@@ -51,7 +53,13 @@ public class GpuMonitor extends JFrame {
 
             // A ProcessBuilder to run OS commands
             ProcessBuilder processBuilder = new ProcessBuilder(command);
-            Process process = null;
+            Process process;
+
+            try {
+                process = processBuilder.start();
+            } catch (IOException e) {
+                return "Failed to run command: nvidia-smi";
+            }
 
             StringBuilder output = new StringBuilder();
 
@@ -59,16 +67,35 @@ public class GpuMonitor extends JFrame {
                 String line;
                 while ((line = input.readLine()) != null) {
                     String[] stats = line.split(",");
-                    output.append(line).append("\n");
-                }
-            }
 
-            return output.toString();
+                    if (stats.length >= 5) {
+                        String name = stats[0];
+                        String utilization = stats[1];
+                        String memoryUsed = stats[2];
+                        String memoryTotal = stats[3];
+                        String memoryFree = stats[4];
+                        String temperature = stats[5];
+
+                        output.append(name).append("\n");
+                        output.append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
+                        output.append(utilization).append("\n");
+                        output.append(temperature).append("\n\n");
+                        output.append(memoryFree).append("\n");
+                    }
+                }
+
+                return output.toString();
+            }
         }
 
         protected void done() {
-            String stats = get();
-            textArea.setText(stats);
+            String stats = null;
+            try {
+                stats = get();
+                textArea.setText(stats);
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
