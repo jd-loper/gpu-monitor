@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Timer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Timer;
 import java.util.concurrent.ExecutionException;
 
 public class GpuMonitor extends JFrame {
@@ -21,9 +21,9 @@ public class GpuMonitor extends JFrame {
         setLocationRelativeTo(null);
 
         textArea = new JTextArea();
-        textArea = setEditable(false);
-        textArea = setFont(new Font("Monospaced", Font.PLAIN, 13));
-        textArea = setMargin(new Insets(10, 10, 10, 10));
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        textArea.setMargin(new Insets(10, 10, 10, 10));
+        textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
@@ -66,9 +66,9 @@ public class GpuMonitor extends JFrame {
             try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = input.readLine()) != null) {
-                    String[] stats = line.split(",");
+                    String[] stats = line.split(", ");
 
-                    if (stats.length >= 5) {
+                    if (stats.length == 7) {
                         String name = stats[0];
                         String utilization = stats[1];
                         String memoryUsed = stats[2];
