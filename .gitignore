@@ -36,3 +36,6 @@ logs/
 *~
 *.bak
 *.old
+
+# ---- Project-specific ignores ----
+/GpuMonitor.java
