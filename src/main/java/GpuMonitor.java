@@ -21,6 +21,9 @@ public class GpuMonitor extends JFrame {
         textArea = new JTextArea();
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
         textArea.setMargin(new Insets(10, 10, 10, 10));
+        textArea.setBackground(new Color(40, 42, 54));
+        textArea.setForeground(new Color(80, 250, 123));
+        textArea.setCaretColor(Color.WHITE);
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
