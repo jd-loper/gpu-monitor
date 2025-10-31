@@ -71,12 +71,12 @@ public class GpuMonitor extends JFrame {
                         String memoryFree = stats[5];
                         String temperature = stats[6];
 
-                        output.append(index).append("\n");
+                        output.append("GPU ").append(index).append("\n");
                         output.append(name).append("\n");
-                        output.append(utilization).append("\n");
-                        output.append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
-                        output.append(memoryFree).append("\n");
-                        output.append(temperature).append("\n\n");
+                        output.append("Utilization: ").append(utilization).append("\n");
+                        output.append("Memory Used/Total: ").append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
+                        output.append("Memory Free: ").append(memoryFree).append("\n");
+                        output.append("Temperature: ").append(temperature).append("C").append("\n\n");
                     }
                 }
 
