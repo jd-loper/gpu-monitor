@@ -55,11 +55,12 @@ public class GpuMonitor extends JFrame {
             try {
                 process = processBuilder.start();
             } catch (IOException e) {
-                return "Failed to run command: nvidia-smi";
+                return "Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed and in your PATH.";
             }
 
             StringBuilder output = new StringBuilder();
 
+            // Split and format CSV output to readable string
             try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
                 while ((line = input.readLine()) != null) {
@@ -93,12 +94,14 @@ public class GpuMonitor extends JFrame {
                 stats = get();
                 textArea.setText(stats);
             } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
+                textArea.setText("Error: " + e.getCause().getMessage());
             }
+            textArea.setCaretPosition(0);
         }
     }
 
     public static void main(String[] args) {
+        // This method updates the GUI asynchronously
         SwingUtilities.invokeLater(() -> new GpuMonitor().start());
     }
 }
