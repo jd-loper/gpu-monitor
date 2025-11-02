@@ -71,7 +71,7 @@ public class GpuMonitor extends JFrame {
                 while ((line = input.readLine()) != null) {
                     String[] stats = line.split(", ");
 
-                    if (stats.length == 7) {
+                    if (stats.length >= 7) {
                         String index = stats[0];
                         String name = stats[1];
                         String utilization = stats[2];
