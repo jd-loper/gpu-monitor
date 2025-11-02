@@ -10,6 +10,7 @@ public class GpuMonitor extends JFrame {
     private final JTextArea textArea;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
+    private JButton copyButton;
 
     public GpuMonitor() {
         // Swing GUI setup
@@ -34,6 +35,11 @@ public class GpuMonitor extends JFrame {
         label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(label, BorderLayout.NORTH);
 
+        JPanel buttonPanel = new JPanel();
+        copyButton = new JButton("Copy to Clipboard");
+        buttonPanel.add(copyButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+
         // Timer to fetch GPU stats every 1000 ms in background
         updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
     }
@@ -49,7 +55,7 @@ public class GpuMonitor extends JFrame {
             // Run command for GPU stats
             String[] command = {
                     "nvidia-smi",
-                    "--query-gpu=index,name,utilization.gpu,memory.used,memory.total,memory.free,temperature.gpu",
+                    "--query-gpu=index,name,utilization.gpu,memory.used,memory.total,memory.free,temperature.gpu,fan.speed",
                     "--format=csv,noheader"
             };
 
@@ -71,7 +77,7 @@ public class GpuMonitor extends JFrame {
                 while ((line = input.readLine()) != null) {
                     String[] stats = line.split(", ");
 
-                    if (stats.length >= 7) {
+                    if (stats.length >= 8) {
                         String index = stats[0];
                         String name = stats[1];
                         String utilization = stats[2];
@@ -79,6 +85,7 @@ public class GpuMonitor extends JFrame {
                         String memoryTotal = stats[4];
                         String memoryFree = stats[5];
                         String temperature = stats[6];
+                        String fanSpeed = stats[7];
 
                         output.append("GPU ").append(index).append("\n");
                         output.append(name).append("\n");
@@ -86,6 +93,7 @@ public class GpuMonitor extends JFrame {
                         output.append("Memory Used/Total: ").append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
                         output.append("Memory Free: ").append(memoryFree).append("\n");
                         output.append("Temperature: ").append(temperature).append("C").append("\n");
+                        output.append("Fan Speed: ").append(fanSpeed).append("\n");
                         output.append("----------------------------------------\n");
                     }
                 }
