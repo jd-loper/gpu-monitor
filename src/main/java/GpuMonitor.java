@@ -23,11 +23,16 @@ public class GpuMonitor extends JFrame {
         textArea.setMargin(new Insets(10, 10, 10, 10));
         textArea.setBackground(new Color(40, 42, 54));
         textArea.setForeground(new Color(80, 250, 123));
-        textArea.setCaretColor(Color.WHITE);
+        textArea.setCaretColor(new Color(40, 42, 54));
         textArea.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
+
+        JLabel label = new JLabel("NVIDIA GPU Monitor", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 16));
+        label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        add(label, BorderLayout.NORTH);
 
         // Timer to fetch GPU stats every 1000 ms in background
         updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
