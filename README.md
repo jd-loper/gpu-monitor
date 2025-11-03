@@ -19,3 +19,10 @@ A lightweight Java application that displays real-time GPU usage statistics with
 The application uses a Java SwingWorker to poll the GPU usage statistics every second using the nvidia-smi utility.
 The SwingWorker runs in a background thread, executing the nvidia-smi command to fetch GPU information and updating the GUI with the latest data.
 It parses the CSV output, formats it into a string, and updates the GUI text field on the main Swing Event Dispatch Thread.
+
+## To-Do
+- Add support for multiple GPUs
+- Convert to JavaFX for enhanced user experience
+- Add support for more metrics
+- Convert to MVC architecture
+- Graphs for data visualization over time
