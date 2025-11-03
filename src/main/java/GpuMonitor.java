@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.Timer;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
