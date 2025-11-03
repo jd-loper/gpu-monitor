@@ -49,30 +49,28 @@ public class GpuMonitor extends JFrame {
             clipboard.setContents(gpuStats, null);
         });
 
+        // Timer to fetch GPU stats every 1000 ms in background
+        updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
+
         JButton pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        pauseButton.addActionListener(e -> togglePause());
-
-        // Timer to fetch GPU stats every 1000 ms in background
-        updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
+        pauseButton.addActionListener(e -> {
+            if (updateTimer.isRunning()) {
+                updateTimer.stop();
+                pauseButton.setText("Resume");
+            } else {
+                updateTimer.start();
+                pauseButton.setText("Pause");
+            }
+        });
     }
 
     public void start() {
         setVisible(true);
         new GpuWorker().execute();
         updateTimer.start();
-    }
-
-    private void togglePause() {
-        if (updateTimer.isRunning()) {
-            updateTimer.stop();
-            pauseButton.setText("Resume");
-        } else {
-            updateTimer.start();
-            pauseButton.setText("Pause");
-        }
     }
 
     private class GpuWorker extends SwingWorker<String, Void> {
