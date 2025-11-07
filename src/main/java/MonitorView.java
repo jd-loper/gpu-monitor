@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MonitorView extends JFrame {
     private JTextArea textArea;
@@ -36,5 +37,26 @@ public class MonitorView extends JFrame {
         JButton pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
         add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    public void setStatsText(String stats) {
+        this.textArea.setText(stats);
+        this.textArea.setCaretPosition(0);
+    }
+
+    public String getStatsText() {
+        return this.textArea.getText();
+    }
+
+    public void setPauseButtonText(String text) {
+        this.pauseButton.setText(text);
+    }
+
+    public void addCopyListener(ActionListener listener) {
+        this.copyButton.addActionListener(listener);
+    }
+
+    public void addPauseListener(ActionListener listener) {
+        this.pauseButton.addActionListener(listener);
     }
 }
