@@ -3,7 +3,6 @@ A lightweight Java application that displays real-time GPU usage statistics with
 
 ## Features
 - Real-time GPU usage monitoring
-- Multi-GPU support
 - Key metrics:
   - Memory usage
   - Fan speed
@@ -24,5 +23,4 @@ It parses the CSV output, formats it into a string, and updates the GUI text fie
 - Add support for multiple GPUs
 - Convert to JavaFX for enhanced user experience
 - Add support for more metrics
-- Convert to MVC architecture
 - Graphs for data visualization over time
