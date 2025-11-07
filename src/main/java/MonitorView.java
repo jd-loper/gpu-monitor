@@ -44,10 +44,6 @@ public class MonitorView extends JFrame {
         this.textArea.setCaretPosition(0);
     }
 
-    public String getStatsText() {
-        return this.textArea.getText();
-    }
-
     public void setPauseButtonText(String text) {
         this.pauseButton.setText(text);
     }
