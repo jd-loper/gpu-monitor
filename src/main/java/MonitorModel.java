@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MonitorModel {
+    private String currentStats;
+
     public String fetchStats() throws IOException {
         String[] command = {
                 "nvidia-smi",
@@ -49,5 +51,13 @@ public class MonitorModel {
 
             return output.toString();
         }
+    }
+
+    public String getGpuStats() {
+        return currentStats;
+    }
+
+    public void setGpuStats(String stats) {
+        this.currentStats = stats;
     }
 }
