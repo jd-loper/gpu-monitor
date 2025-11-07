@@ -30,11 +30,11 @@ public class MonitorView extends JFrame {
         add(label, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
-        JButton copyButton = new JButton("Copy to Clipboard");
+        copyButton = new JButton("Copy to Clipboard");
         buttonPanel.add(copyButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        JButton pauseButton = new JButton("Pause");
+        pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
         add(buttonPanel, BorderLayout.SOUTH);
     }
