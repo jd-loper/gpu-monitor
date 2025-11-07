@@ -36,7 +36,7 @@ public class MonitorController {
 
     private void copyToClipboard() {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection gpuStats = new StringSelection(view.getStatsText());
+        StringSelection gpuStats = new StringSelection(model.getGpuStats());
         clipboard.setContents(gpuStats, null);
     }
 
