@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 public class MonitorModel {
     private String currentStats;
-    private boolean isPaused;
+    private boolean isPaused = false;
 
     public String fetchStats() throws IOException {
         String[] command = {
@@ -63,7 +63,7 @@ public class MonitorModel {
     }
 
     public boolean isPaused() {
-        return isPaused();
+        return isPaused;
     }
 
     public void togglePauseState() {
