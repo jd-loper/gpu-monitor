@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MonitorView extends JFrame {
+    private JTextArea textArea;
+    private JButton pauseButton;
+    private JButton copyButton;
+
     public MonitorView() {
         setTitle("GPU Monitor");
         setSize(600, 400);
