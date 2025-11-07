@@ -23,7 +23,7 @@ public class MonitorController {
     }
 
     private void togglePause() {
-        model.pauseState();
+        model.togglePauseState();
 
         if (model.isPaused()) {
             updateTimer.stop();
@@ -48,7 +48,7 @@ public class MonitorController {
         protected void done() {
             try {
                 String stats = get();
-                model.setCurrentStats(stats);
+                model.setGpuStats(stats);
                 view.setStatsText(stats);
             } catch (InterruptedException | ExecutionException e) {
                 view.setStatsText("Error: " + e.getCause().getMessage());
