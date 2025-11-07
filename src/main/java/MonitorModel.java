@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 
 public class MonitorModel {
     private String currentStats;
+    private boolean isPaused;
 
     public String fetchStats() throws IOException {
         String[] command = {
@@ -59,5 +60,13 @@ public class MonitorModel {
 
     public void setGpuStats(String stats) {
         this.currentStats = stats;
+    }
+
+    public boolean isPaused() {
+        return isPaused();
+    }
+
+    public void togglePauseState() {
+        this.isPaused = !this.isPaused();
     }
 }
