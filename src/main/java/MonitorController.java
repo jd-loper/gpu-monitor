@@ -1,3 +1,4 @@
+import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -63,6 +64,8 @@ public class MonitorController {
     }
 
     public static void main(String[] args) {
+        FlatDarculaLaf.setup();
+
         // This method updates the GUI asynchronously
         SwingUtilities.invokeLater(() -> {
             MonitorModel model = new MonitorModel();
