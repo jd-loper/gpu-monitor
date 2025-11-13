@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class MonitorView extends JFrame {
     private JTextArea textArea;
@@ -39,8 +40,8 @@ public class MonitorView extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void setStatsText(String stats) {
-        this.textArea.setText(stats);
+    public void setStatsText(List<GpuStats> statsList) {
+        this.textArea.setText(statsList);
         this.textArea.setCaretPosition(0);
     }
 
