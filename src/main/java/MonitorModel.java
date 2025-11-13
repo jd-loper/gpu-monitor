@@ -1,12 +1,14 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MonitorModel {
-    private String currentStats;
     private boolean isPaused = false;
+    private List<GpuStats> currentStats = new ArrayList<>();
 
-    public String fetchStats() throws IOException {
+    public List<GpuStats> fetchStats() throws IOException {
         String[] command = {
                 "nvidia-smi",
                 "--query-gpu=index,name,utilization.gpu,memory.used,memory.total,memory.free,temperature.gpu,fan.speed",
@@ -19,10 +21,10 @@ public class MonitorModel {
         try {
             process = processBuilder.start();
         } catch (IOException e) {
-            return "Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed and in your PATH.";
+            throw new IOException("Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed and in your PATH.");
         }
 
-        StringBuilder output = new StringBuilder();
+        List<GpuStats> statsList = new ArrayList<>();
 
         try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
             String line;
@@ -30,35 +32,36 @@ public class MonitorModel {
                 String[] stats = line.split(", ");
 
                 if (stats.length >= 8) {
-                    String index = stats[0];
+                    int index = parseStats(stats[0]);
                     String name = stats[1];
-                    String utilization = stats[2];
-                    String memoryUsed = stats[3];
-                    String memoryTotal = stats[4];
-                    String memoryFree = stats[5];
-                    String temperature = stats[6];
-                    String fanSpeed = stats[7];
+                    int utilization = parseStats(stats[2]);
+                    int memoryUsed = parseStats(stats[3]);
+                    int memoryTotal = parseStats(stats[4]);
+                    int memoryFree = parseStats(stats[5]);
+                    int temperature = parseStats(stats[6]);
+                    int fanSpeed = parseStats(stats[7]);
 
-                    output.append("GPU ").append(index).append("\n");
-                    output.append(name).append("\n");
-                    output.append("Utilization: ").append(utilization).append("\n");
-                    output.append("Memory Used/Total: ").append(memoryUsed).append(" / ").append(memoryTotal).append("\n");
-                    output.append("Memory Free: ").append(memoryFree).append("\n");
-                    output.append("Temperature: ").append(temperature).append("C").append("\n");
-                    output.append("Fan Speed: ").append(fanSpeed).append("\n");
-                    output.append("----------------------------------------\n");
+                    statsList.add(new GpuStats(index, name, utilization, memoryUsed, memoryTotal, memoryFree, temperature, fanSpeed));
                 }
             }
+        }
+        return statsList;
+    }
 
-            return output.toString();
+    private int parseStats(String value) {
+        try {
+            String[] parts = value.split("\\D", 2);
+            return Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 
-    public String getGpuStats() {
+    public List<GpuStats> getGpuStats() {
         return currentStats;
     }
 
-    public void setGpuStats(String stats) {
+    public void setGpuStats(List<GpuStats> stats) {
         this.currentStats = stats;
     }
 
