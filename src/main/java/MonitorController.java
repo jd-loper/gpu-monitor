@@ -5,6 +5,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.List;
 
 public class MonitorController {
     private MonitorModel model;
@@ -41,16 +42,16 @@ public class MonitorController {
         clipboard.setContents(gpuStats, null);
     }
 
-    private class GpuWorker extends SwingWorker<String, Void> {
-        protected String doInBackground() throws IOException {
+    private class GpuWorker extends SwingWorker<List<GpuStats>, Void> {
+        protected List<GpuStats> doInBackground() throws IOException {
             return model.fetchStats();
         }
 
         protected void done() {
             try {
-                String stats = get();
-                model.setGpuStats(stats);
-                view.setStatsText(stats);
+                List<GpuStats> statsList = get();
+                model.setGpuStats(statsList);
+                view.setStatsText(statsList);
             } catch (InterruptedException | ExecutionException e) {
                 view.setStatsText("Error: " + e.getCause().getMessage());
             }
