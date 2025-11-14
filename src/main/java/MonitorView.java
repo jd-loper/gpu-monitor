@@ -40,8 +40,8 @@ public class MonitorView extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void setStatsText(List<GpuStats> statsList) {
-        this.textArea.setText(statsList);
+    public void setStatsText(String stats) {
+        this.textArea.setText(stats);
         this.textArea.setCaretPosition(0);
     }
 
