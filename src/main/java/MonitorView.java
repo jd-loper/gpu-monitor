@@ -15,7 +15,7 @@ public class MonitorView extends JFrame {
         setLocationRelativeTo(null);
 
         textArea = new JTextArea();
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
         textArea.setMargin(new Insets(10, 10, 10, 10));
         textArea.setBackground(new Color(40, 42, 54));
         textArea.setForeground(new Color(80, 250, 123));
