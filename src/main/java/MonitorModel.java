@@ -15,6 +15,8 @@ public class MonitorModel {
                 "--format=csv,noheader"
         };
 
+        // The ProcessBuilder executes OS processes
+        // It runs the nvidia-smi utility defined above
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         Process process;
 
