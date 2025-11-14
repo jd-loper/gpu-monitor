@@ -24,6 +24,7 @@ public class MonitorModel {
             throw new IOException("Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed and in your PATH.");
         }
 
+        // A list to store stats for each GPU
         List<GpuStats> statsList = new ArrayList<>();
 
         try (BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
@@ -48,6 +49,7 @@ public class MonitorModel {
         return statsList;
     }
 
+    // Parses a string to an integer, returning 0 if the string is not a number
     private int parseStats(String value) {
         try {
             String[] parts = value.split("\\D", 2);
