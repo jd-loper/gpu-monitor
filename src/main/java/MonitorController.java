@@ -37,8 +37,12 @@ public class MonitorController {
     }
 
     private void copyToClipboard() {
+        List<GpuStats> statsList = model.getGpuStats();
+
+        String clipboardText = StatsFormatter.format(statsList);
+
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection gpuStats = new StringSelection(model.getGpuStats());
+        StringSelection gpuStats = new StringSelection(clipboardText);
         clipboard.setContents(gpuStats, null);
     }
 
@@ -51,9 +55,12 @@ public class MonitorController {
             try {
                 List<GpuStats> statsList = get();
                 model.setGpuStats(statsList);
-                view.setStatsText(statsList);
+
+                String formattedStats = StatsFormatter.format(statsList);
+                view.setStatsText(formattedStats);
             } catch (InterruptedException | ExecutionException e) {
-                view.setStatsText("Error: " + e.getCause().getMessage());
+                String error = "Failed to fetch GPU stats: " + e.getCause().getMessage();
+                view.setStatsText(error);
             }
         }
     }
