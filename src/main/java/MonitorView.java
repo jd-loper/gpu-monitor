@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class MonitorView extends JFrame {
     private JTextArea textArea;
@@ -21,6 +20,7 @@ public class MonitorView extends JFrame {
         textArea.setForeground(new Color(80, 250, 123));
         textArea.setCaretColor(new Color(40, 42, 54));
         textArea.setEditable(false);
+        UIManager.put("Component.focusWidth", 0);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         add(scrollPane, BorderLayout.CENTER);
@@ -34,10 +34,12 @@ public class MonitorView extends JFrame {
         copyButton = new JButton("Copy to Clipboard");
         buttonPanel.add(copyButton);
         add(buttonPanel, BorderLayout.SOUTH);
+        copyButton.putClientProperty("JButton.buttonType", "roundRect");
 
         pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
         add(buttonPanel, BorderLayout.SOUTH);
+        pauseButton.putClientProperty("JButton.buttonType", "roundRect");
     }
 
     public void setStatsText(String stats) {
