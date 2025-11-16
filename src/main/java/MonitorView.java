@@ -25,7 +25,6 @@ public class MonitorView extends JFrame {
         UIManager.put("Component.focusWidth", 0);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);
 
         JLabel label = new JLabel("NVIDIA GPU Monitor", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 16));
@@ -43,13 +42,13 @@ public class MonitorView extends JFrame {
         JPanel buttonPanel = new JPanel();
         copyButton = new JButton("Copy to Clipboard");
         buttonPanel.add(copyButton);
-        add(buttonPanel, BorderLayout.SOUTH);
         copyButton.putClientProperty("JButton.buttonType", "roundRect");
 
         pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
-        add(buttonPanel, BorderLayout.SOUTH);
         pauseButton.putClientProperty("JButton.buttonType", "roundRect");
+
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public void setStatsText(String stats) {
