@@ -56,6 +56,12 @@ public class MonitorView extends JFrame {
         this.textArea.setCaretPosition(0);
     }
 
+    public void setChartPanel(JPanel panel) {
+        this.tempChart = panel;
+        this.chartPanel.add(tempChart);
+
+    }
+
     public void setPauseButtonText(String text) {
         this.pauseButton.setText(text);
     }

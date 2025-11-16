@@ -6,10 +6,14 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.List;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
 
 public class MonitorController {
     private MonitorModel model;
     private MonitorView view;
+    private XYChart tempChart;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
 
@@ -22,6 +26,18 @@ public class MonitorController {
 
         // Timer to fetch GPU stats every 1000 ms in background
         this.updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
+
+        // Initialize and pass chart to view
+        initTempChart();
+        XChartPanel<XYChart> tempChartPanel = new XChartPanel<>(tempChart);
+        view.setChartPanel(tempChartPanel);
+    }
+
+    private void initTempChart() {
+        double[] xData = new double[] {0.0, 1.0, 2.0};
+        double[] yData = new double[] {2.0, 1.0, 0.0};
+
+        tempChart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
     }
 
     private void togglePause() {
