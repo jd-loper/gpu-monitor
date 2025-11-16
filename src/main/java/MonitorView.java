@@ -7,7 +7,6 @@ public class MonitorView extends JFrame {
     private JButton pauseButton;
     private JButton copyButton;
     private JPanel chartPanel;
-    private JPanel tempChart;
 
     public MonitorView() {
         setTitle("GPU Monitor");
@@ -57,9 +56,7 @@ public class MonitorView extends JFrame {
     }
 
     public void setChartPanel(JPanel panel) {
-        this.tempChart = panel;
-        this.chartPanel.add(tempChart);
-
+        this.chartPanel.add(panel);
     }
 
     public void setPauseButtonText(String text) {
