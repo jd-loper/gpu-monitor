@@ -6,10 +6,12 @@ public class MonitorView extends JFrame {
     private JTextArea textArea;
     private JButton pauseButton;
     private JButton copyButton;
+    private JPanel chartPanel;
+    private JPanel tempChart;
 
     public MonitorView() {
         setTitle("GPU Monitor");
-        setSize(600, 400);
+        setSize(900, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -29,6 +31,14 @@ public class MonitorView extends JFrame {
         label.setFont(new Font("Arial", Font.BOLD, 16));
         label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(label, BorderLayout.NORTH);
+
+        chartPanel = new JPanel(new BorderLayout());
+        chartPanel.setPreferredSize(new Dimension(450, 400));
+
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+        mainPanel.add(scrollPane);
+        mainPanel.add(chartPanel);
+        add(mainPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
         copyButton = new JButton("Copy to Clipboard");
