@@ -55,7 +55,7 @@ public class MonitorController {
         tempChart.getStyler().setChartFontColor(new Color(248, 248, 242));
         tempChart.getStyler().setAxisTickLabelsColor(new Color(248, 248, 242));
         tempChart.getStyler().setSeriesColors(new Color[] {new Color(80, 250, 123)});
-        tempChart.getStyler().setPlotGridLinesColor(new Color(160, 160, 160));
+        tempChart.getStyler().setPlotGridLinesColor(new Color(99, 99, 99));
 
         timeData.add(0.0);
         tempData.add(40.0);
