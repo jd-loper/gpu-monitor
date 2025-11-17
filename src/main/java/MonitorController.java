@@ -4,16 +4,21 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.List;
-import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler;
 
 public class MonitorController {
     private MonitorModel model;
     private MonitorView view;
     private XYChart tempChart;
+    private List<Double> timeData = new ArrayList<>();
+    private List<Double> tempData = new ArrayList<>();
+    private double chartCounter = 0;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
 
@@ -34,10 +39,22 @@ public class MonitorController {
     }
 
     private void initTempChart() {
-        double[] xData = new double[] {0.0, 1.0, 2.0};
-        double[] yData = new double[] {2.0, 1.0, 0.0};
+        tempChart = new XYChartBuilder()
+                .width(450)
+                .height(400)
+                .title("GPU Temperature")
+                .xAxisTitle("Time (s)")
+                .yAxisTitle("Temperature (°C)")
+                .build();
 
-        tempChart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+        tempChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        tempChart.getStyler().setYAxisMin(30.0);
+        tempChart.getStyler().setYAxisMax(100.0);
+        tempChart.getStyler().setPlotGridLinesVisible(true);
+
+        timeData.add(0.0);
+        tempData.add(40.0);
+        tempChart.addSeries("Temperature", timeData, tempData);
     }
 
     private void togglePause() {
