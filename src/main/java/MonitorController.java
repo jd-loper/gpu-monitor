@@ -105,6 +105,7 @@ public class MonitorController {
                     timeData.add(chartCounter);
                     tempData.add((double) currentTemp);
 
+                    tempChart.setTitle(statsList.get(0).getName());
                     tempChart.updateXYSeries("Temperature", timeData, tempData, null);
                     view.repaintChart();
                 }
