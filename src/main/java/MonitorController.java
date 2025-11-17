@@ -91,6 +91,18 @@ public class MonitorController {
 
                 String formattedStats = StatsFormatter.format(statsList);
                 view.setStatsText(formattedStats);
+
+                // Repaints temperature chart with real-time data
+                if (!statsList.isEmpty() && !model.isPaused()) {
+                    int currentTemp = statsList.get(0).getTemperature();
+
+                    chartCounter += UPDATE_INTERVAL / 1000.0;
+                    timeData.add(chartCounter);
+                    tempData.add((double) currentTemp);
+
+                    tempChart.updateXYSeries("Temperature", timeData, tempData, null);
+                    view.repaintChart();
+                }
             } catch (InterruptedException | ExecutionException e) {
                 String error = "Failed to fetch GPU stats: " + e.getCause().getMessage();
                 view.setStatsText(error);
