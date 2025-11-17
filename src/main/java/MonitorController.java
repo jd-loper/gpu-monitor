@@ -10,7 +10,6 @@ import java.util.List;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.style.Styler;
 
 public class MonitorController {
     private MonitorModel model;
@@ -47,10 +46,16 @@ public class MonitorController {
                 .yAxisTitle("Temperature (°C)")
                 .build();
 
-        tempChart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        tempChart.getStyler().setLegendVisible(false);
         tempChart.getStyler().setYAxisMin(30.0);
         tempChart.getStyler().setYAxisMax(100.0);
         tempChart.getStyler().setPlotGridLinesVisible(true);
+        tempChart.getStyler().setChartBackgroundColor(new Color(40, 42, 54));
+        tempChart.getStyler().setPlotBackgroundColor(new Color(40, 42, 54));
+        tempChart.getStyler().setChartFontColor(new Color(248, 248, 242));
+        tempChart.getStyler().setAxisTickLabelsColor(new Color(248, 248, 242));
+        tempChart.getStyler().setSeriesColors(new Color[] {new Color(80, 250, 123)});
+        tempChart.getStyler().setPlotGridLinesColor(new Color(160, 160, 160));
 
         timeData.add(0.0);
         tempData.add(40.0);
