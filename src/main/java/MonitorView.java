@@ -24,7 +24,7 @@ public class MonitorView extends JFrame {
 
     private void initComponents() {
         textArea = new JTextArea();
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
         textArea.setMargin(new Insets(10, 10, 10, 10));
         textArea.setBackground(new Color(40, 42, 54));
         textArea.setForeground(new Color(80, 250, 123));
@@ -42,10 +42,14 @@ public class MonitorView extends JFrame {
     }
 
     private void arrangeLayout() {
-        JLabel label = new JLabel("NVIDIA GPU Monitor", SwingConstants.CENTER);
-        label.setFont(new Font("Arial", Font.BOLD, 16));
-        label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        add(label, BorderLayout.NORTH);
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+
+        gpuSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        topPanel.add(gpuSelection);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        add(topPanel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
 
