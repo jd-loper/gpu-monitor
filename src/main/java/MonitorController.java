@@ -12,11 +12,11 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
 public class MonitorController {
-    private MonitorModel model;
-    private MonitorView view;
+    private final MonitorModel model;
+    private final MonitorView view;
     private XYChart tempChart;
-    private List<Double> timeData = new ArrayList<>();
-    private List<Double> tempData = new ArrayList<>();
+    private final List<Double> timeData = new ArrayList<>();
+    private final List<Double> tempData = new ArrayList<>();
     private double chartCounter = 0;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;

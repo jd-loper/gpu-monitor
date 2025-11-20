@@ -1,12 +1,12 @@
 public class GpuStats {
-    private int index;
-    private String name;
-    private int utilization;
-    private int memoryUsed;
-    private int memoryTotal;
-    private int memoryFree;
-    private int temperature;
-    private int fanSpeed;
+    private final int index;
+    private final String name;
+    private final int utilization;
+    private final int memoryUsed;
+    private final int memoryTotal;
+    private final int memoryFree;
+    private final int temperature;
+    private final int fanSpeed;
 
     public GpuStats(int index, String name, int utilization, int memoryUsed, int memoryTotal, int memoryFree, int temperature, int fanSpeed) {
         this.index = index;
