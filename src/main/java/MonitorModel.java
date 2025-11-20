@@ -8,23 +8,24 @@ public class MonitorModel {
     private boolean isPaused = false;
     private List<GpuStats> currentStats = new ArrayList<>();
 
-    public List<GpuStats> fetchStats() throws IOException {
+    private Process runProcess() throws IOException {
         String[] command = {
                 "nvidia-smi",
                 "--query-gpu=index,name,utilization.gpu,memory.used,memory.total,memory.free,temperature.gpu,fan.speed",
                 "--format=csv,noheader"
         };
 
-        // The ProcessBuilder executes OS processes
-        // It runs the nvidia-smi utility defined above
         ProcessBuilder processBuilder = new ProcessBuilder(command);
-        Process process;
 
         try {
-            process = processBuilder.start();
+            return processBuilder.start();
         } catch (IOException e) {
-            throw new IOException("Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed and in your PATH.");
+            throw new IOException("Failed to run command: nvidia-smi. Please check to see if nvidia-smi is installed.");
         }
+    }
+
+    public List<GpuStats> fetchStats() throws IOException {
+        Process process = runProcess();
 
         // A list to store stats for each GPU
         List<GpuStats> statsList = new ArrayList<>();
