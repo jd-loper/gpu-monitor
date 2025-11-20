@@ -7,13 +7,22 @@ public class MonitorView extends JFrame {
     private JButton pauseButton;
     private JButton copyButton;
     private JPanel chartPanel;
+    private JComboBox<String> gpuSelection;
 
     public MonitorView() {
+        createFrame();
+        initComponents();
+        arrangeLayout();
+    }
+
+    private void createFrame() {
         setTitle("GPU Monitor");
         setSize(900, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
 
+    private void initComponents() {
         textArea = new JTextArea();
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
         textArea.setMargin(new Insets(10, 10, 10, 10));
@@ -23,12 +32,22 @@ public class MonitorView extends JFrame {
         textArea.setEditable(false);
         UIManager.put("Component.focusWidth", 0);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        copyButton = new JButton("Copy to Clipboard");
+        copyButton.putClientProperty("JButton.buttonType", "roundRect");
 
+        pauseButton = new JButton("Pause");
+        pauseButton.putClientProperty("JButton.buttonType", "roundRect");
+
+        gpuSelection = new JComboBox<>();
+    }
+
+    private void arrangeLayout() {
         JLabel label = new JLabel("NVIDIA GPU Monitor", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 16));
         label.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(label, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
 
         chartPanel = new JPanel(new BorderLayout());
         chartPanel.setPreferredSize(new Dimension(450, 400));
@@ -39,14 +58,8 @@ public class MonitorView extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
-        copyButton = new JButton("Copy to Clipboard");
         buttonPanel.add(copyButton);
-        copyButton.putClientProperty("JButton.buttonType", "roundRect");
-
-        pauseButton = new JButton("Pause");
         buttonPanel.add(pauseButton);
-        pauseButton.putClientProperty("JButton.buttonType", "roundRect");
-
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
