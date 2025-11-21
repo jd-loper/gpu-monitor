@@ -28,7 +28,7 @@ public class MonitorController {
         this.view.addCopyListener(e -> copyToClipboard());
         this.view.addPauseListener(e -> togglePause());
 
-        // Timer to fetch GPU stats every 1000 ms in background
+        // Timer to fetch GPU stats every 1000 ms in the background
         this.updateTimer = new Timer(UPDATE_INTERVAL, e -> new GpuWorker().execute());
 
         // Initialize and pass chart to view
@@ -56,6 +56,7 @@ public class MonitorController {
         tempChart.getStyler().setAxisTickLabelsColor(new Color(248, 248, 242));
         tempChart.getStyler().setSeriesColors(new Color[] {new Color(80, 250, 123)});
         tempChart.getStyler().setPlotGridLinesColor(new Color(99, 99, 99));
+        tempChart.getStyler().setMarkerSize(0);
 
         timeData.add(0.0);
         tempData.add(40.0);
