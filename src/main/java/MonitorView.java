@@ -7,7 +7,6 @@ public class MonitorView extends JFrame {
     private JButton pauseButton;
     private JButton copyButton;
     private JPanel chartPanel;
-    private JComboBox<String> gpuSelection;
 
     public MonitorView() {
         createFrame();
@@ -16,7 +15,7 @@ public class MonitorView extends JFrame {
     }
 
     private void createFrame() {
-        setTitle("GPU Monitor");
+        setTitle("NVIDIA GPU Monitor");
         setSize(900, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -37,20 +36,9 @@ public class MonitorView extends JFrame {
 
         pauseButton = new JButton("Pause");
         pauseButton.putClientProperty("JButton.buttonType", "roundRect");
-
-        gpuSelection = new JComboBox<>();
     }
 
     private void arrangeLayout() {
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
-
-        gpuSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        topPanel.add(gpuSelection);
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        add(topPanel, BorderLayout.NORTH);
-
         JScrollPane scrollPane = new JScrollPane(textArea);
 
         chartPanel = new JPanel(new BorderLayout());
