@@ -20,6 +20,7 @@ public class MonitorController {
     private double chartCounter = 0;
     private final Timer updateTimer;
     private static final int UPDATE_INTERVAL = 1000;
+    private static final int MAX_DATA_POINTS = 300;
 
     public MonitorController(MonitorModel model, MonitorView view) {
         this.model = model;
@@ -105,6 +106,12 @@ public class MonitorController {
                     chartCounter += UPDATE_INTERVAL / 1000.0;
                     timeData.add(chartCounter);
                     tempData.add((double) currentTemp);
+
+                    // Removes older data points to prevent memory leak
+                    while (timeData.size() > MAX_DATA_POINTS) {
+                        timeData.remove(0);
+                        tempData.remove(0);
+                    }
 
                     tempChart.setTitle(statsList.get(0).getName());
                     tempChart.updateXYSeries("Temperature", timeData, tempData, null);
